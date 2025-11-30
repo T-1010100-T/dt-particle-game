@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
+      base: '/dt-particle-game/', // 添加这一行，匹配你的仓库名
       server: {
         port: 3000,
         host: '0.0.0.0',

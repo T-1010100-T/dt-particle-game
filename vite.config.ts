@@ -4,8 +4,10 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    // GitHub Pages 需要仓库名作为 base，其他环境用根路径
+    const base = process.env.GITHUB_ACTIONS ? '/dt-particle-game/' : './';
     return {
-      base: './', // 使用相对路径，兼容所有部署环境
+      base,
       server: {
         port: 3000,
         host: '0.0.0.0',

@@ -49,7 +49,15 @@ export const HandTracker: React.FC<HandTrackerProps> = ({ onUpdate }) => {
         handLandmarkerRef.current = handLandmarker;
         setIsReady(true);
 
-        // Enumerate devices first
+        // 先请求摄像头权限，这样才能获取到设备名称
+        try {
+          const tempStream = await navigator.mediaDevices.getUserMedia({ video: true });
+          tempStream.getTracks().forEach(track => track.stop()); // 立即停止，只是为了获取权限
+        } catch (err) {
+          console.warn('获取摄像头权限失败:', err);
+        }
+
+        // 现在枚举设备，可以获取到完整的设备名称
         const allDevices = await navigator.mediaDevices.enumerateDevices();
         const allVideoDevices = allDevices.filter(device => device.kind === 'videoinput');
         
